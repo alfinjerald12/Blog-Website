@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Diary | Monetizing Your Passion</title>
+    <link rel="stylesheet" href="../CSS/monetizeblog.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Pixel<span>Diary</span></div>
+        <nav>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html#latest-blogs">Latest</a></li>
+            <li><a href="home.html#trending-blogs">Trending</a></li>
+            <li><a href="account.html">Account</a></li>
+        </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <header class="page-header">
+            <h1>Monetizing Your Passion</h1>
+            <p>Turn your hobby into a source of income with these tips.</p>
+        </header>
+
+        <main>
+            <section id="blog-posts" class="blog-posts-container">
+                <h2 class="section-title animate-on-scroll">Income Streams</h2>
+                <div class="posts-grid">
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Affiliate Marketing 101</h3>
+                        <p class="meta">By The Monetizer | Dec 2, 2024</p>
+                        <p class="snippet">Earn commissions by recommending products you love. A beginner's guide to finding the right programs and creating content that converts...</p>
+                    </article>
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Creating and Selling Digital Products</h3>
+                        <p class="meta">By The Monetizer | Dec 2, 2024</p>
+                        <p class="snippet">From e-books to online courses, learn how to package your knowledge into a valuable product that your audience will love to buy...</p>
+                    </article>
+                    <article class="blog-card animate-on-scroll">
+                        <h3>The Art of Sponsored Posts</h3>
+                        <p class="meta">By The Monetizer | Dec 2, 2024</p>
+                        <p class="snippet">Collaborate with brands and get paid for your content. We'll show you how to build a media kit and pitch to companies in your niche...</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="blog-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-meta"></p>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const blogCards = document.querySelectorAll('.blog-card');
+        const modal = document.getElementById('blog-modal');
+        const modalCloseButton = document.querySelector('.close-button');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMeta = document.getElementById('modal-meta');
+        const modalBody = document.getElementById('modal-body');
+
+        const fullContent = {
+            "Affiliate Marketing 101": "Earn commissions by recommending products you love. A beginner's guide to finding the right programs and creating content that converts. The key is authenticity; only promote products you genuinely use and believe in. This builds trust with your audience, making them more likely to purchase through your links.",
+            "Creating and Selling Digital Products": "From e-books to online courses, learn how to package your knowledge into a valuable product that your audience will love to buy. This is a powerful way to generate passive income. Start by identifying a common problem your audience has and create a comprehensive solution in the form of a digital product.",
+            "The Art of Sponsored Posts": "Collaborate with brands and get paid for your content. We'll show you how to build a media kit and pitch to companies in your niche. A media kit is like a resume for your blog, showcasing your stats, audience demographics, and past collaborations. A professional media kit makes you more attractive to potential brand partners."
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        blogCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('h3').innerText;
+                const meta = card.querySelector('.meta').innerText;
+                modalTitle.innerText = title;
+                modalMeta.innerText = meta;
+                modalBody.innerHTML = `<p>${fullContent[title] || card.querySelector('.snippet').innerText}</p>`;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeModal = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        modalCloseButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => e.target === modal && closeModal());
+    });
+    </script>
+</body>
+</html>

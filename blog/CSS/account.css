@@ -1,0 +1,293 @@
+/* General Setup & Font Import */
+:root {
+  --primary-color: #bb86fc;
+  --primary-variant: #3700b3;
+  --secondary-color: #03dac6;
+  --background-color: #121212;
+  --surface-color: #1e1e1e;
+  --on-primary-color: #000;
+  --on-surface-color: #e0e0e0;
+  --glow-color: rgba(187, 134, 252, 0.5);
+  --error-color: #cf6679;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--on-surface-color);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Sparkle Background Effect */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-repeat: repeat;
+  z-index: -1;
+  will-change: transform;
+  animation: sparkle 50s linear infinite;
+}
+
+body::before {
+  background-image: radial-gradient(
+      circle at 15% 35%,
+      rgba(255, 255, 255, 0.15) 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle at 75% 55%,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1.5px
+    );
+  background-size: 250px 250px;
+}
+
+body::after {
+  background-image: radial-gradient(
+      circle at 5% 85%,
+      rgba(255, 255, 255, 0.2) 0.5px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(255, 255, 255, 0.2) 0.5px,
+      transparent 1px
+    );
+  background-size: 150px 150px;
+  animation-direction: reverse;
+}
+
+@keyframes sparkle {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-250px, -250px); }
+}
+
+/* Navbar (Consistent with other pages) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background-color: rgba(22, 22, 22, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--on-surface-color);
+}
+
+.logo span {
+  color: var(--primary-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--on-surface-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding-bottom: 5px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--primary-color);
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary-color);
+  transition: width 0.3s ease-out;
+}
+
+.nav-links a:hover::after, .nav-links a.active::after {
+  width: 100%;
+}
+
+/* Account Page Layout */
+.account-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 75px); /* Adjust based on navbar height */
+  padding: 40px 20px;
+}
+
+/* Form Container - The main box with animations */
+.form-container {
+  width: 400px;
+  height: 520px;
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px var(--glow-color);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #333;
+  animation: fadeInScaleUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+@keyframes fadeInScaleUp {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Individual Form Styles */
+.form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+#login-form {
+  transform: translateX(0);
+}
+
+#register-form {
+  transform: translateX(100%);
+}
+
+/* Animation for switching forms */
+.form-container.show-register #login-form {
+  transform: translateX(-100%);
+}
+
+.form-container.show-register #register-form {
+  transform: translateX(0);
+}
+
+.form h2 {
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Input Group Styling */
+.input-group {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #555;
+  color: var(--on-surface-color);
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-bottom-color: var(--primary-color);
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 35px;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+  top: -10px;
+  left: 0;
+  font-size: 12px;
+  color: var(--primary-color);
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.input-group input:focus ~ i {
+    color: var(--primary-color);
+}
+
+/* Button Styling */
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 6px;
+  color: var(--on-primary-color);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn:hover {
+  background-color: var(--primary-variant);
+  transform: translateY(-2px);
+}
+
+/* Form Switch Link */
+.form-switch {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.form-switch a {
+  color: var(--secondary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.form-switch a:hover {
+  text-decoration: underline;
+}

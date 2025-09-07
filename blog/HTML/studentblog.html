@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Diary | Student Blog</title>
+    <link rel="stylesheet" href="../CSS/studentblog.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Pixel<span>Diary</span></div>
+        <nav>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html#latest-blogs">Latest</a></li>
+            <li><a href="home.html#trending-blogs">Trending</a></li>
+            <li><a href="account.html">Account</a></li>
+        </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <header class="page-header">
+            <h1>Student Scribbles</h1>
+            <p>A place for thoughts, ideas, and late-night study revelations.</p>
+        </header>
+
+        <main>
+            <section id="blog-posts" class="blog-posts-container">
+                <h2 class="section-title animate-on-scroll">Latest Posts</h2>
+                <div class="posts-grid">
+                    <!-- Sample Blog 1 -->
+                    <article class="blog-card animate-on-scroll">
+                        <h3>The Art of Procrastination</h3>
+                        <p class="meta">By Alex Doe | Oct 26, 2023</p>
+                        <p class="snippet">Discovering the hidden productivity in waiting until the last minute. A journey through deadlines, coffee, and the surprising benefits of putting things off...</p>
+                    </article>
+
+                    <!-- Sample Blog 2 -->
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Surviving Group Projects</h3>
+                        <p class="meta">By Jane Smith | Oct 24, 2023</p>
+                        <p class="snippet">A survival guide to navigating the treacherous waters of group assignments. From the "leader" to the "ghost," we've seen them all. Here's how to make it work.</p>
+                    </article>
+
+                    <!-- Sample Blog 3 -->
+                    <article class="blog-card animate-on-scroll">
+                        <h3>My First "Hello, World!" in Python</h3>
+                        <p class="meta">By Sam Wilson | Oct 22, 2023</p>
+                        <p class="snippet">It's more than just two words on a screen. It's the start of a new adventure in coding. Recounting the small victory that sparked a passion for programming.</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="blog-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-meta"></p>
+            <div id="modal-body">
+                <!-- Full blog content will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const blogCards = document.querySelectorAll('.blog-card');
+        const modal = document.getElementById('blog-modal');
+        const modalCloseButton = document.querySelector('.close-button');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMeta = document.getElementById('modal-meta');
+        const modalBody = document.getElementById('modal-body');
+
+        // In a real application, you would fetch this content. For now, we'll use a placeholder.
+        const fullContent = {
+            "The Art of Procrastination": "Discovering the hidden productivity in waiting until the last minute. A journey through deadlines, coffee, and the surprising benefits of putting things off... It turns out that strategic procrastination, also known as 'structured procrastination', can lead to more creative solutions. By letting your subconscious mull over a problem while you work on other tasks, you can often arrive at insights you wouldn't have reached by tackling it head-on immediately. This post explores several techniques to master this art, from creating a prioritized to-do list where the 'most important' task is a decoy, to understanding your own energy cycles to schedule tasks effectively. We'll also look at the psychological difference between active, intentional procrastination and passive, guilt-ridden avoidance.",
+            "Surviving Group Projects": "A survival guide to navigating the treacherous waters of group assignments. From the 'leader' to the 'ghost,' we've seen them all. Here's how to make it work. The key is clear communication and setting expectations from day one. A kickoff meeting is crucial to assign roles, establish communication channels (like a group chat), and set internal deadlines for each part of the project. This guide provides a template for a group contract, tips for dealing with unresponsive members, and strategies for conflict resolution. Remember, the goal is not just to get a good grade, but to learn how to collaborate effectively—a skill you'll need for the rest of your career.",
+            "My First \"Hello, World!\" in Python": "It's more than just two words on a screen. It's the start of a new adventure in coding. Recounting the small victory that sparked a passion for programming. That simple `print('Hello, World!')` command is a rite of passage for every programmer. It represents the moment you successfully communicate with the machine and it responds. This post delves into what's happening behind the scenes when you run that code, the importance of this first step in building confidence, and where to go next. We'll explore basic data types, variables, and simple functions to take your journey beyond the initial greeting and into the vast world of software development."
+        };
+
+        // --- Scroll Animation ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        blogCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('h3').innerText;
+                const meta = card.querySelector('.meta').innerText;
+                
+                modalTitle.innerText = title;
+                modalMeta.innerText = meta;
+                // Use the placeholder full content based on the title
+                modalBody.innerHTML = `<p>${fullContent[title] || card.querySelector('.snippet').innerText}</p>`;
+
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            });
+        });
+
+        const closeModal = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore background scrolling
+        };
+
+        modalCloseButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => e.target === modal && closeModal()); // Close if overlay is clicked
+    });
+    </script>
+</body>
+</html>

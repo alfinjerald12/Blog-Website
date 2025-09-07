@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Diary | SEO for Bloggers</title>
+    <link rel="stylesheet" href="../CSS/seoblog.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Pixel<span>Diary</span></div>
+        <nav>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html#latest-blogs">Latest</a></li>
+            <li><a href="home.html#trending-blogs">Trending</a></li>
+            <li><a href="#">Account</a></li>
+        </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <header class="page-header">
+            <h1>SEO for Bloggers</h1>
+            <p>Simple strategies to get your blog found on Google.</p>
+        </header>
+
+        <main>
+            <section id="blog-posts" class="blog-posts-container">
+                <h2 class="section-title animate-on-scroll">Key Strategies</h2>
+                <div class="posts-grid">
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Keyword Research is King</h3>
+                        <p class="meta">By SEO Expert | Dec 1, 2024</p>
+                        <p class="snippet">Learn how to find what your audience is searching for and tailor your content to meet their needs. Tools like Ubersuggest and Google Keyword Planner are your best friends...</p>
+                    </article>
+                    <article class="blog-card animate-on-scroll">
+                        <h3>On-Page SEO Basics</h3>
+                        <p class="meta">By SEO Expert | Dec 1, 2024</p>
+                        <p class="snippet">Mastering titles, meta descriptions, headers, and image alt text is non-negotiable. These small details make a huge difference in how search engines understand your content...</p>
+                    </article>
+                    <article class="blog-card animate-on-scroll">
+                        <h3>The Power of Backlinks</h3>
+                        <p class="meta">By SEO Expert | Dec 1, 2024</p>
+                        <p class="snippet">Building authority is crucial. Discover ethical strategies for earning high-quality backlinks from other reputable sites to boost your blog's credibility and ranking...</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="blog-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-meta"></p>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const blogCards = document.querySelectorAll('.blog-card');
+        const modal = document.getElementById('blog-modal');
+        const modalCloseButton = document.querySelector('.close-button');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMeta = document.getElementById('modal-meta');
+        const modalBody = document.getElementById('modal-body');
+
+        const fullContent = {
+            "Keyword Research is King": "Learn how to find what your audience is searching for and tailor your content to meet their needs. Tools like Ubersuggest and Google Keyword Planner are your best friends. Start by brainstorming topics related to your niche, then use these tools to find long-tail keywords with good search volume and low competition. Integrating these keywords naturally into your content is the first step to ranking.",
+            "On-Page SEO Basics": "Mastering titles, meta descriptions, headers, and image alt text is non-negotiable. These small details make a huge difference in how search engines understand your content. Your title tag should be compelling and include your primary keyword. Your meta description is your sales pitch in the search results. Use H1, H2, and H3 tags to structure your content logically.",
+            "The Power of Backlinks": "Building authority is crucial. Discover ethical strategies for earning high-quality backlinks from other reputable sites to boost your blog's credibility and ranking. This can include guest posting, creating valuable resources that others want to link to (like infographics or studies), and reaching out to other bloggers in your niche."
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        blogCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('h3').innerText;
+                const meta = card.querySelector('.meta').innerText;
+                modalTitle.innerText = title;
+                modalMeta.innerText = meta;
+                modalBody.innerHTML = `<p>${fullContent[title] || card.querySelector('.snippet').innerText}</p>`;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeModal = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        modalCloseButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => e.target === modal && closeModal());
+    });
+    </script>
+</body>
+</html>

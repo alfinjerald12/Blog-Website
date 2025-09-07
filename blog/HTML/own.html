@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Diary | Own Blog</title>
+    <link rel="stylesheet" href="../CSS/own.css">
+</head>
+<body>
+    <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Pixel<span>Diary</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="home.html#latest-blogs">Latest</a></li>
+        <li><a href="home.html#trending-blogs">Trending</a></li>
+        <li><a href="account.html">Account</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  <section id="create-post">
+                <h2 class="page-header animate-on-scroll">Create Your Own Post</h2>
+                <form class="blog-form" action="../PHP/publish_post.php" method="POST">
+                    <div class="form-group animate-on-scroll">
+                        <label for="post-title">Blog Title</label>
+                        <input type="text" id="post-title" name="post-title" placeholder="The Art of..." required>
+                    </div>
+                    <div class="form-group animate-on-scroll">
+                        <label for="post-author">Your Name</label>
+                        <input type="text" id="post-author" name="post-author" placeholder="Alex Doe" required>
+                    </div>
+                    <div class="form-group animate-on-scroll">
+                        <label for="post-content">Your Thoughts</label>
+                        <textarea id="post-content" name="post-content" placeholder="It all started when..." required></textarea>
+                    </div>
+                    <button type="submit" class="publish-btn animate-on-scroll">Publish Post</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create a URLSearchParams object from the current URL's query string
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Check if the 'status' parameter exists and is set to 'success'
+        if (urlParams.get('status') === 'success') {
+            // Display a popup alert
+            alert('Congratulations!! your blog has been published');
+
+            // Optional: This part removes the '?status=success' from the URL
+            // so the alert doesn't reappear if the user reloads the page.
+            if (window.history.replaceState) {
+                const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
+            }
+        }
+
+        // --- Scroll Animation ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>
+
+    
+</body>
+</html>

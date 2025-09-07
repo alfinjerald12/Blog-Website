@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Diary | Designing Blog</title>
+  <link rel="stylesheet" href="../CSS/designingblog.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Pixel<span>Diary</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="home.html#latest-blogs">Latest</a></li>
+        <li><a href="home.html#trending-blogs">Trending</a></li>
+        <li><a href="account.html">Account</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container">
+    <header class="page-header">
+      <h1>Design & Creativity</h1>
+      <p>Exploring the world of UI/UX, typography, and digital art.</p>
+    </header>
+
+    <main>
+      <section id="blog-posts" class="blog-posts-container">
+        <h2 class="section-title animate-on-scroll">Design Insights</h2>
+        <div class="posts-grid">
+          <!-- Sample Blog 1 -->
+          <article class="blog-card animate-on-scroll">
+            <h3>Creative UI Design Trends for 2025</h3>
+            <p class="meta">By Alex Doe | Nov 18, 2024</p>
+            <p class="snippet">From glassmorphism to kinetic typography, we dive into the visual trends that will define digital interfaces in the coming year...</p>
+          </article>
+
+          <!-- Sample Blog 2 -->
+          <article class="blog-card animate-on-scroll">
+            <h3>The Psychology of Color in Web Design</h3>
+            <p class="meta">By Jane Smith | Nov 16, 2024</p>
+            <p class="snippet">Discover how color choices can influence user emotion, perception, and behavior. A deep dive into creating effective color palettes...</p>
+          </article>
+
+          <!-- Sample Blog 3 -->
+          <article class="blog-card animate-on-scroll">
+            <h3>Getting Started with Figma: A Beginner's Guide</h3>
+            <p class="meta">By Sam Wilson | Nov 13, 2024</p>
+            <p class="snippet">Learn the fundamentals of the industry-leading design tool. From setting up your first frame to creating interactive prototypes...</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="blog-modal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-meta"></p>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const blogCards = document.querySelectorAll('.blog-card');
+      const modal = document.getElementById('blog-modal');
+      const modalCloseButton = document.querySelector('.close-button');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMeta = document.getElementById('modal-meta');
+      const modalBody = document.getElementById('modal-body');
+
+      const fullContent = {
+        "Creative UI Design Trends for 2025": "From glassmorphism to kinetic typography, we dive into the visual trends that will define digital interfaces in the coming year. This article explores how to implement these trends effectively to create modern, engaging, and user-friendly websites and applications.",
+        "The Psychology of Color in Web Design": "Discover how color choices can influence user emotion, perception, and behavior. A deep dive into creating effective color palettes. We'll look at the meanings behind different colors and how major brands use them to their advantage.",
+        "Getting Started with Figma: A Beginner's Guide": "Learn the fundamentals of the industry-leading design tool. From setting up your first frame to creating interactive prototypes. This step-by-step tutorial is perfect for anyone looking to break into the world of UI/UX design."
+      };
+
+      // --- Scroll Animation ---
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('is-visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, {
+          threshold: 0.1
+      });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+          observer.observe(el);
+      });
+
+      blogCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const title = card.querySelector('h3').innerText;
+          const meta = card.querySelector('.meta').innerText;
+          modalTitle.innerText = title;
+          modalMeta.innerText = meta;
+          modalBody.innerHTML = `<p>${fullContent[title] || card.querySelector('.snippet').innerText}</p>`;
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      const closeModal = () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      };
+
+      modalCloseButton.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => e.target === modal && closeModal());
+    });
+  </script>
+</body>
+</html>

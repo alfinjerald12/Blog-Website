@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Diary | Travel Blog</title>
+  <link rel="stylesheet" href="../CSS/travelblog.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Pixel<span>Diary</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="home.html#latest-blogs">Latest</a></li>
+        <li><a href="home.html#trending-blogs">Trending</a></li>
+        <li><a href="#">Account</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container">
+    <header class="page-header">
+      <h1>Wanderlust Chronicles</h1>
+      <p>Journeys to far-off lands and hidden gems right next door.</p>
+    </header>
+
+    <main>
+      <section id="blog-posts" class="blog-posts-container">
+        <h2 class="section-title animate-on-scroll">Travel Stories</h2>
+        <div class="posts-grid">
+          <!-- Sample Blog 1 -->
+          <article class="blog-card animate-on-scroll">
+            <h3>Top 5 European Cities for Solo Travelers</h3>
+            <p class="meta">By Alex Doe | Nov 15, 2024</p>
+            <p class="snippet">From the historic streets of Prague to the sunny canals of Lisbon, discover the best destinations for your next solo adventure in Europe...</p>
+          </article>
+
+          <!-- Sample Blog 2 -->
+          <article class="blog-card animate-on-scroll">
+            <h3>Backpacking Through Southeast Asia on a Budget</h3>
+            <p class="meta">By Jane Smith | Nov 12, 2024</p>
+            <p class="snippet">A comprehensive guide to exploring Thailand, Vietnam, and Cambodia without breaking the bank. Tips on hostels, street food, and local transport...</p>
+          </article>
+
+          <!-- Sample Blog 3 -->
+          <article class="blog-card animate-on-scroll">
+            <h3>The Ultimate Road Trip Packing List</h3>
+            <p class="meta">By Sam Wilson | Nov 10, 2024</p>
+            <p class="snippet">Never forget your essentials again. This checklist covers everything from car maintenance kits to the perfect playlist for the open road...</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="blog-modal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-meta"></p>
+      <div id="modal-body">
+        <!-- Full blog content will be injected here by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const blogCards = document.querySelectorAll('.blog-card');
+      const modal = document.getElementById('blog-modal');
+      const modalCloseButton = document.querySelector('.close-button');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMeta = document.getElementById('modal-meta');
+      const modalBody = document.getElementById('modal-body');
+
+      const fullContent = {
+        "Top 5 European Cities for Solo Travelers": "From the historic streets of Prague to the sunny canals of Lisbon, discover the best destinations for your next solo adventure in Europe. This guide covers safety, affordability, and the top attractions for those traveling alone. We'll explore why these cities are perfect for meeting new people and creating unforgettable memories.",
+        "Backpacking Through Southeast Asia on a Budget": "A comprehensive guide to exploring Thailand, Vietnam, and Cambodia without breaking the bank. Tips on hostels, street food, and local transport. Learn how to navigate night markets, book affordable tours, and immerse yourself in the local culture while keeping your expenses low.",
+        "The Ultimate Road Trip Packing List": "Never forget your essentials again. This checklist covers everything from car maintenance kits to the perfect playlist for the open road. We've included sections for clothing, toiletries, snacks, and entertainment to ensure your journey is as smooth as possible."
+      };
+
+      // --- Scroll Animation ---
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('is-visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, {
+          threshold: 0.1
+      });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+          observer.observe(el);
+      });
+
+      blogCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const title = card.querySelector('h3').innerText;
+          const meta = card.querySelector('.meta').innerText;
+          modalTitle.innerText = title;
+          modalMeta.innerText = meta;
+          modalBody.innerHTML = `<p>${fullContent[title] || card.querySelector('.snippet').innerText}</p>`;
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      const closeModal = () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      };
+
+      modalCloseButton.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => e.target === modal && closeModal());
+    });
+  </script>
+</body>
+</html>

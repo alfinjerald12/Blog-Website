@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Diary | Building a Community</title>
+    <link rel="stylesheet" href="../CSS/communityblog.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Pixel<span>Diary</span></div>
+        <nav>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html#latest-blogs">Latest</a></li>
+            <li><a href="home.html#trending-blogs">Trending</a></li>
+            <li><a href="#">Account</a></li>
+        </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <header class="page-header">
+            <h1>Building a Community</h1>
+            <p>Engage your readers and create a loyal following.</p>
+        </header>
+
+        <main>
+            <section id="blog-posts" class="blog-posts-container">
+                <h2 class="section-title animate-on-scroll">Engagement Tips</h2>
+                <div class="posts-grid">
+                    <article class="blog-card animate-on-scroll">
+                        <h3>The Power of a Newsletter</h3>
+                        <p class="meta">By The Connector | Dec 3, 2024</p>
+                        <p class="snippet">Go beyond the blog post. A newsletter is a direct line to your most dedicated readers, allowing you to build a deeper connection...</p>
+                    </article>
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Responding to Every Comment</h3>
+                        <p class="meta">By The Connector | Dec 3, 2024</p>
+                        <p class="snippet">It sounds simple, but acknowledging your readers' comments makes them feel heard and valued, encouraging more interaction in the future...</p>
+                    </article>
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Hosting a Q&A or Live Session</h3>
+                        <p class="meta">By The Connector | Dec 3, 2024</p>
+                        <p class="snippet">Engage with your audience in real-time. Live sessions on social media are a fantastic way to answer questions and show the person behind the blog...</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="blog-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-meta"></p>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const blogCards = document.querySelectorAll('.blog-card');
+        const modal = document.getElementById('blog-modal');
+        const modalCloseButton = document.querySelector('.close-button');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMeta = document.getElementById('modal-meta');
+        const modalBody = document.getElementById('modal-body');
+
+        const fullContent = {
+            "The Power of a Newsletter": "Go beyond the blog post. A newsletter is a direct line to your most dedicated readers, allowing you to build a deeper connection. Share exclusive content, behind-the-scenes stories, and personal updates to make your subscribers feel like insiders.",
+            "Responding to Every Comment": "It sounds simple, but acknowledging your readers' comments makes them feel heard and valued, encouraging more interaction in the future. Ask follow-up questions to spark a conversation and show that you're genuinely interested in their thoughts.",
+            "Hosting a Q&A or Live Session": "Engage with your audience in real-time. Live sessions on social media are a fantastic way to answer questions and show the person behind the blog. It makes your brand more human and approachable, fostering a stronger sense of community."
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        blogCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('h3').innerText;
+                const meta = card.querySelector('.meta').innerText;
+                modalTitle.innerText = title;
+                modalMeta.innerText = meta;
+                modalBody.innerHTML = `<p>${fullContent[title] || card.querySelector('.snippet').innerText}</p>`;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeModal = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        modalCloseButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => e.target === modal && closeModal());
+    });
+    </script>
+</body>
+</html>

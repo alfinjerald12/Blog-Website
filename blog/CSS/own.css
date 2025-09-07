@@ -1,0 +1,298 @@
+/* General Setup & Font Import */
+:root {
+  --primary-color: #bb86fc;
+  --primary-variant: #3700b3;
+  --secondary-color: #03dac6;
+  --background-color: #121212;
+  --surface-color: #1e1e1e;
+  --on-primary-color: #000;
+  --on-surface-color: #e0e0e0;
+  --glow-color: rgba(187, 134, 252, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background-color: rgba(22, 22, 22, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--on-surface-color);
+  text-decoration: none; /* Assuming logo is a link */
+}
+
+.logo span {
+  color: var(--primary-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a {
+  color: var(--on-surface-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding-bottom: 5px; /* Space for the underline */
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+/* Underline hover effect */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease-out;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--surface-color);
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  opacity: 0;
+  visibility: hidden;
+  min-width: 180px;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  list-style: none;
+}
+
+.dropdown-menu a {
+  padding: 10px 20px;
+  display: block;
+  color: var(--on-surface-color);
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--primary-color);
+  color: var(--on-primary-color);
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--background-color);
+  color: var(--on-surface-color);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Sparkle Background Effect */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-repeat: repeat;
+  z-index: -1;
+  will-change: transform;
+}
+
+body::before {
+  background-image: radial-gradient(
+      circle at 15% 35%,
+      rgba(255, 255, 255, 0.3) 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle at 75% 55%,
+      rgba(255, 255, 255, 0.2) 1px,
+      transparent 1.5px
+    );
+  background-size: 300px 300px;
+  animation: sparkle 50s linear infinite;
+}
+
+body::after {
+  background-image: radial-gradient(
+      circle at 5% 85%,
+      rgba(255, 255, 255, 0.4) 0.5px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(255, 255, 255, 0.4) 0.5px,
+      transparent 1px
+    );
+  background-size: 100px 100px;
+  animation: sparkle-fast 25s linear infinite reverse;
+}
+.page-header {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  font-family: "Montserrat", sans-serif;
+  font-size: 30px;
+  text-shadow: 0 0 30px var(--glow-color);
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.page-header.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Create Post Form */
+.blog-form {
+  background-color: var(--surface-color);
+  padding: 50px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  width: 70%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px var(--glow-color);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  /* Animation setup */
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.form-group.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--background-color);
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: var(--on-surface-color);
+  font-family: "Roboto", sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px var(--glow-color);
+}
+
+.form-group textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.publish-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--on-primary-color);
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.publish-btn.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.publish-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.2);
+}
+
+/* Staggered animation for form */
+.form-group.is-visible:nth-of-type(1) { transition-delay: 0.2s; }
+.form-group.is-visible:nth-of-type(2) { transition-delay: 0.3s; }
+.form-group.is-visible:nth-of-type(3) { transition-delay: 0.4s; }
+.publish-btn.is-visible { transition-delay: 0.5s; }
+
+/* Animations */
+@keyframes sparkle {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-300px, -300px);
+  }
+}
+
+@keyframes sparkle-fast {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100px, 100px);
+  }
+}

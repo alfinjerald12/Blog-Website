@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Diary | How to Start a Blog</title>
+    <link rel="stylesheet" href="../CSS/startblog.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Pixel<span>Diary</span></div>
+        <nav>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="home.html#latest-blogs">Latest</a></li>
+            <li><a href="home.html#trending-blogs">Trending</a></li>
+            <li><a href="#">Account</a></li>
+        </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <header class="page-header">
+            <h1>How to Start a Blog in 2025</h1>
+            <p>A step-by-step guide for aspiring bloggers.</p>
+        </header>
+
+        <main>
+            <section id="blog-posts" class="blog-posts-container">
+                <h2 class="section-title animate-on-scroll">First Steps</h2>
+                <div class="posts-grid">
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Choosing Your Niche</h3>
+                        <p class="meta">By The Founder | Dec 4, 2024</p>
+                        <p class="snippet">The foundation of your blog. We'll help you find the perfect topic that you're passionate about and that has an audience waiting to read it...</p>
+                    </article>
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Picking a Platform & Hosting</h3>
+                        <p class="meta">By The Founder | Dec 4, 2024</p>
+                        <p class="snippet">WordPress, Squarespace, or something else? A breakdown of the most popular blogging platforms to help you make the right choice for your needs...</p>
+                    </article>
+                    <article class="blog-card animate-on-scroll">
+                        <h3>Writing Your First 5 Posts</h3>
+                        <p class="meta">By The Founder | Dec 4, 2024</p>
+                        <p class="snippet">Don't launch to an empty site. Learn how to craft compelling cornerstone content that will hook your first visitors and keep them coming back for more...</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="blog-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-meta"></p>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const blogCards = document.querySelectorAll('.blog-card');
+        const modal = document.getElementById('blog-modal');
+        const modalCloseButton = document.querySelector('.close-button');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMeta = document.getElementById('modal-meta');
+        const modalBody = document.getElementById('modal-body');
+
+        const fullContent = {
+            "Choosing Your Niche": "The foundation of your blog. We'll help you find the perfect topic that you're passionate about and that has an audience waiting to read it. A good niche is the intersection of your interests, your expertise, and what people are searching for.",
+            "Picking a Platform & Hosting": "WordPress, Squarespace, or something else? A breakdown of the most popular blogging platforms to help you make the right choice for your needs. We compare self-hosted WordPress.org for flexibility with user-friendly builders like Wix and Squarespace.",
+            "Writing Your First 5 Posts": "Don't launch to an empty site. Learn how to craft compelling cornerstone content that will hook your first visitors and keep them coming back for more. These initial posts should clearly define what your blog is about and provide immediate value to your readers."
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        blogCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('h3').innerText;
+                const meta = card.querySelector('.meta').innerText;
+                modalTitle.innerText = title;
+                modalMeta.innerText = meta;
+                modalBody.innerHTML = `<p>${fullContent[title] || card.querySelector('.snippet').innerText}</p>`;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeModal = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        modalCloseButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => e.target === modal && closeModal());
+    });
+    </script>
+</body>
+</html>
