@@ -1,0 +1,384 @@
+/* General Setup & Font Import */
+:root {
+  --primary-color: #bb86fc;
+  --primary-variant: #3700b3;
+  --secondary-color: #03dac6;
+  --background-color: #121212;
+  --surface-color: #1e1e1e;
+  --on-primary-color: #000;
+  --on-surface-color: #e0e0e0;
+  --glow-color: rgba(187, 134, 252, 0.5);
+}
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* General Body Styles */
+body {
+  background-color: #121212; /* Dark background */
+  color: #e0e0e0;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+ul {
+  list-style: none;
+}
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background-color: rgba(22, 22, 22, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--on-surface-color);
+  text-decoration: none; /* Assuming logo is a link */
+}
+
+.logo span {
+  color: var(--primary-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a {
+  color: var(--on-surface-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding-bottom: 5px; /* Space for the underline */
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+/* Underline hover effect */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease-out;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--surface-color);
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  opacity: 0;
+  visibility: hidden;
+  min-width: 180px;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  list-style: none;
+}
+
+.dropdown-menu a {
+  padding: 10px 20px;
+  display: block;
+  color: var(--on-surface-color);
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--primary-color);
+  color: var(--on-primary-color);
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  padding: 100px 20px;
+  text-align: center;
+  overflow: hidden; /* Important for pseudo-elements */
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 100px 100px;
+  animation: sparkle 20s linear infinite;
+}
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+  position: relative; /* To ensure it's above the pseudo-element */
+  z-index: 1;
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.hero h1 span {
+  color: #00aaff;
+  text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+}
+.hero p {
+  font-size: 18px;
+  position: relative; /* To ensure it's above the pseudo-element */
+  z-index: 1;
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
+}
+.herobtn{
+  display: inline-block;
+  margin-top: 25px;
+  position: relative; /* To ensure it's above the pseudo-element */
+  z-index: 1;
+  padding: 10px 20px;
+  background-color: #00aaff;
+  box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+  color: #ffffff;
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.6s ease-out 0.4s, opacity 0.6s ease-out 0.4s;
+  border: none;
+  cursor: pointer;
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(20px);
+}
+.herobtn:hover {
+  background-color: #fff;
+  transform: scale(1.05);
+  color: black;
+  box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+  text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+  
+}
+
+/* Add .is-visible state for hero elements */
+.hero h1.is-visible, .hero p.is-visible, .herobtn.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Blog Section */
+.blogs {
+  padding: 50px 20px;
+}
+.blogs h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.blogs h2.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+.blog-card {
+  background: #1c1c1c;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+}
+
+.blog-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered animation for blog cards */
+.blog-card.is-visible:nth-of-type(1) { transition-delay: 0.1s; }
+.blog-card.is-visible:nth-of-type(2) { transition-delay: 0.2s; }
+.blog-card.is-visible:nth-of-type(3) { transition-delay: 0.3s; }
+.blog-card.is-visible:nth-of-type(4) { transition-delay: 0.4s; }
+
+.blog-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 170, 255, 0.2);
+}
+.blog-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.blog-card:hover img {
+  transform: scale(1.1);
+}
+.blog-card .content {
+  padding: 20px;
+}
+.blog-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #00aaff;
+}
+.blog-card p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #aaa;
+}
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #00aaff;
+  color: #121212;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #fff;
+  transform: scale(1.05);
+}
+
+/* --- Trending Section Unique Animations --- */
+
+/* Override the default blog-card animation for trending cards */
+.trending-card {
+  opacity: 0;
+  /* Start smaller and slightly blurred for a focus effect */
+  transform: scale(0.8);
+  filter: blur(4px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out, box-shadow 0.3s ease;
+}
+
+.trending-card.is-visible {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+
+/* Unique hover for trending cards - a brighter glow */
+.trending-card:hover {
+  transform: translateY(-10px) scale(1.03); /* Slightly different hover effect */
+  box-shadow: 0 15px 35px rgba(0, 170, 255, 0.35);
+}
+
+/* Staggered animation for trending cards */
+.trending-section .trending-card.is-visible:nth-of-type(1) { transition-delay: 0.1s; }
+.trending-section .trending-card.is-visible:nth-of-type(2) { transition-delay: 0.2s; }
+.trending-section .trending-card.is-visible:nth-of-type(3) { transition-delay: 0.3s; }
+.trending-section .trending-card.is-visible:nth-of-type(4) { transition-delay: 0.4s; }
+
+/* Footer */
+.footer {
+  background-color: #1c1c1c;
+  padding: 50px 5% 20px;
+  margin-top: 50px;
+  border-top: 1px solid #333;
+}
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 20px;
+}
+.footer h3, .footer h4 {
+  color: #00aaff;
+}
+.footer p, .footer li {
+  font-size: 14px;
+  color: #ccc;
+}
+.footer .links ul {
+  padding-top: 10px;
+}
+.footer .links li {
+  margin-bottom: 8px;
+}
+.footer .links a {
+  transition: color 0.3s ease;
+}
+.footer .links a:hover {
+  color: #00aaff;
+}
+.footer .socials .icons a {
+  margin-right: 12px;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+.footer .socials .icons a:hover {
+  color: #00aaff;
+}
+.copy {
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 20px;
+}
